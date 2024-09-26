@@ -16,8 +16,8 @@ dotenv.config({});
 const app = express();
 
 // Serve the React build files
-const __dirname = path.resolve();
-console.log(__dirname);
+// const __dirname = path.resolve();
+// console.log(__dirname);
 
 
 
@@ -26,8 +26,12 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 const corsOptions = {
-    origin:true,
-    credentials:true
+    // origin:true,
+    // credentials:true
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials':true,
+    'Access-Control-Allow-Methods':['POST','GET', "PUT", "DELETE"],
+    'Access-Control-Allow-Headers':'Content-Type'
 }
 
 app.use(cors(corsOptions));
@@ -44,11 +48,11 @@ app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 
-app.use(express.static(path.join(__dirname, "/client/dist")));
+// app.use(express.static(path.join(__dirname, "/client/dist")));
 
-app.get("*",(req,res)=>{
-    res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
-})
+// app.get("*",(req,res)=>{
+//     res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
+// })
 
 
 
