@@ -1,5 +1,5 @@
 
-### The Ultimate repo for beginners 😎 <br>
+### The Ultimate Project Repository For Beginners 😎 <br>
 
 
 
@@ -13,7 +13,10 @@
 
 📌 Introduction
 ------------------
-**Ignyte** We're a tight-knit community of developers, coders, and designers who are here to learn and teach, with a mission to spread the fire of knowledge and empower each other without any bounds!Get ready to join forces with other like-minded individuals in a fun, supportive environment! Let's set the tech world ablaze together!
+**JobHive** is a modern job portal designed to bridge the gap between recruiters and candidates. It enables recruiters to post jobs effortlessly, review applications, and streamline candidate selection. Job seekers can easily explore opportunities, apply for jobs, and track their applications. With features like secure authentication, user-friendly interfaces, and seamless functionality, JobHive simplifies the recruitment process. Whether you're hiring or looking for your dream job, JobHive is your go-to platform for success in the professional world.
+
+
+
 
 
 ## Contributing :handshake:
@@ -32,16 +35,16 @@
 **2.** Clone the forked repository.
 
 ```bash
-git clone https://github.com/Ignyte-community/Open-source-practice.git
+git clone https://github.com/vedanshjainvj/Job-Hive.git
 ```
 
 **3.** Navigate to the project directory.
 
 ```bash
-cd Open-source-practice
+cd JobHive-OpenSource
 ```
 
-**4.** Create a new branch.
+**4.** Create a new branch for every feature or bug fix.
 
 ```bash
 git checkout -b <your_branch_name>
@@ -68,6 +71,5 @@ git push -u origin <your_branch_name>
 **9.** **Congratulations!** :tada: Sit and relax, you've made your contribution :v: :heart: 💥
 
 <br><br>
-
 
 :tada: :confetti_ball: :smiley: _**Happy Contributing**_ :smiley: :confetti_ball: :tada:
