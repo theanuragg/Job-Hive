@@ -21,7 +21,7 @@
 
 ## Contributing :handshake:
 
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=git&logoColor=white)](https://ignyte-website.vercel.app/pulls)[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?color=red)](https://ignyte-website.vercel.app/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=git&logoColor=white)](https://github.com/vedanshjainvj/Job-Hive/pulls)[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?color=red)](https://github.com/vedanshjainvj/Job-Hive/pulls)
 
 
 
