@@ -147,20 +147,19 @@ Enhancement suggestions are tracked as [GitHub issues](/issues).
 ## How to create a PR:
 Follow these steps to create a pull request:
 
-### 1. Fork the Repository
-   - Go to the repository you want to contribute to.
+### 1. Fork & Star the Repository
+   - Go to the repository you want to contribute to and give it a star.
    - Click the **Fork** button in the top right corner to create a copy of the repository under your GitHub account.
 
 ### 2. Clone the Forked Repository
    - Copy the repository URL from your forked repository (click the **Code** button and copy the URL).
    - Open a terminal and run the following command:
      ```bash
-     git clone https://github.com/<username>/FeatherPerfect_fe.git
+     https://github.com/vedanshjainvj/Job-Hive.git
      ```
-   - Replace `<username>` with the your username.
    - Navigate to the cloned repository:
      ```bash
-     cd <FeatherPerfect_fe>
+     cd <Job-Hive>
      ```
 
 ### 3. Create a New Branch
