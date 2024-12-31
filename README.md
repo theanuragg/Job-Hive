@@ -26,7 +26,7 @@
 
 
 
-**We're accepting PRs for our open and unassigned [issues🐛]()**. Please check [CONTRIBUTING.md✨](). We'd love your contributions! **Kindly follow the steps below to get started:** 
+**We're accepting PRs for our open and unassigned [issues🐛](https://github.com/vedanshjainvj/Job-Hive/issues)**. Please check [CONTRIBUTING.md✨](). We'd love your contributions! **Kindly follow the steps below to get started:** 
 
 **0.** Star [this](https://github.com/vedanshjainvj/Job-Hive) repository.
 
