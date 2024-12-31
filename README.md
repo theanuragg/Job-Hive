@@ -75,6 +75,9 @@ git push -u origin <your_branch_name>
 
 **9.** **Congratulations!** :tada: Sit and relax, you've made your contribution :v: :heart: 💥
 
+## LICENCE
+(LICENCE)
+
 <br><br>
 
 :tada: :confetti_ball: :smiley: _**Happy Contributing**_ :smiley: :confetti_ball: :tada:
