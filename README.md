@@ -75,9 +75,31 @@ git push -u origin <your_branch_name>
 
 **9.** **Congratulations!** :tada: Sit and relax, you've made your contribution :v: :heart: 💥
 
-## LICENCE
-(LICENCE)
-
 <br><br>
+
+## 🏆 Contribution Points
+Contributors can earn points based on the complexity of their tasks:
+- **🥇 Level 1**: 10 Points  
+- **🥈 Level 2**: 25 Points  
+- **🥉 Level 3**: 45 Points  
+
+
+## SWOC Code of Conduct
+As this project is part of SWOC, please follow the [Guidelines](https://docs.google.com/document/d/1JQdzFbdIlRNjeBZiyZS-9oXE29n6ps-c4SeehPrud_U/edit?usp=sharing) to ensure smooth participation.
+
+
+
+## 👥 Project Admin
+| ![Vedansh Jain](https://avatars.githubusercontent.com/u/111676155?v=4) |  |
+|:--:|:--:|
+| **Vedansh Jain** <br> <sub>Project Admin</sub> <br> [![LinkedIn](https://img.icons8.com/fluency/32/000000/linkedin.png)](https://www.linkedin.com/in/vedanshcode)  [![GitHub](https://img.icons8.com/?size=33&id=63777&format=png&color=000000)](https://github.com/vedanshjainvj) 
+
+
+<!--Line-->
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="900">
+
+## 📄 Ending Note
+Thank you for your interest in **JobHive**! We value your contributions and are excited to have you as part of our community. Feel free to share your ideas, report bugs, and help us make **JobHive** even better.
+
 
 :tada: :confetti_ball: :smiley: _**Happy Contributing**_ :smiley: :confetti_ball: :tada:
