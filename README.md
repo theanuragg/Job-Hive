@@ -28,9 +28,9 @@
 
 **We're accepting PRs for our open and unassigned [issues🐛]()**. Please check [CONTRIBUTING.md✨](). We'd love your contributions! **Kindly follow the steps below to get started:** 
 
-**0.** Star [this](https://github.com/Ignyte-community/Open-source-practice) repository.
+**0.** Star [this](https://github.com/vedanshjainvj/Job-Hive) repository.
 
-**1.** Fork [this](https://github.com/Ignyte-community/Open-source-practice) repository.
+**1.** Fork [this](https://github.com/vedanshjainvj/Job-Hive) repository.
 
 **2.** Clone the forked repository.
 
