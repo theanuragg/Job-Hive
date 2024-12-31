@@ -46,7 +46,7 @@ git clone https://github.com/vedanshjainvj/Job-Hive.git
 **3.** Navigate to the project directory.
 
 ```bash
-cd JobHive-OpenSource
+cd Job-Hive
 ```
 
 **4.** Create a new branch for every feature or bug fix.
