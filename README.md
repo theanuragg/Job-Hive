@@ -11,7 +11,7 @@
 <a href="#Contribution" title="Contributions are welcome"><img src="https://img.shields.io/badge/contributions-welcome-green.svg"></a> <br>
 
 <div align="center">
-  <img src="https://assets.devfolio.co/hackathons/10e9c91c8b6e403ab676235d64c25af0/assets/cover/511.jpeg" alt="GSSoC 2024 Extd" width="80%">
+  <img src="https://i.ibb.co/zFdJgvQ/Screenshot-548.png" alt="SWOC 2024" width="80%">
 </div>
 
 
