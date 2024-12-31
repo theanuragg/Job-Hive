@@ -81,7 +81,8 @@ git push -u origin <your_branch_name>
 Contributors can earn points based on the complexity of their tasks:
 - **🥇 Level 1**: 10 Points  
 - **🥈 Level 2**: 25 Points  
-- **🥉 Level 3**: 45 Points  
+- **🥉 Level 3**: 45 Points
+<br> <br>
 
 
 ## SWOC Code of Conduct
