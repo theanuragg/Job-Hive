@@ -12,14 +12,15 @@ import { useNavigate } from 'react-router-dom';
 import { USER_API_END_POINT } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading, setUser } from '@/redux/authSlice';
-
+import { loginInfoSchema} from '../utils/formValidation';
 const Login = () => {
     const [input, setInput] = useState({
         email: "",
         password: "",
         role: "",
     });
-
+    const [error,setError]=useState(null)
+    
     const [showPassword, setShowPassword] = useState(false);
     const dispatch = useDispatch();
     const { loading, user } = useSelector(store => store.auth);
@@ -33,9 +34,26 @@ const Login = () => {
         setShowPassword(!showPassword);
     };
 
+    const validateLoginInfo=(loginInfo)=>{
+        const {role,...rest}=input
+        try {
+            const validatedInfo=loginInfoSchema.parse(rest)
+            setError(null)
+            return true;
+        } catch (error) {
+           const zodError={...error} 
+        //    console.log("validation errors: ",zodError.issues)
+           setError(zodError.issues.map(err=>err.message))
+           return false;
+        }
+    }
+ 
     const submitHandler = async (e) => {
         e.preventDefault();
+
+    if(!validateLoginInfo(input))return;
         dispatch(setLoading(true));
+        
         try {
             const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
                 headers: {
@@ -133,6 +151,9 @@ const Login = () => {
                     <span className='text-sm'>Don't have an account? <Link to="/signup" className='text-blue-600'>Signup</Link></span>
                 </form>
             </div>
+            {
+                error && error.map((err)=>toast.error(err))
+            }
         </div>
     );
 };
