@@ -10,27 +10,25 @@ import { USER_API_END_POINT } from "../utils/constants";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "@/redux/authSlice";
-import { Loader2, Eye, EyeOff, AlertCircle } from "lucide-react";
-import { signupInfoSchema} from "../utils/formValidation";
-
+import { Loader2, Eye, EyeOff } from "lucide-react";
+import { signupInfoSchema } from "../utils/formValidation";
+import OAuth from "./OAuth";
 
 const Signup = () => {
-  
   const [input, setInput] = useState({
     fullname: "",
     email: "",
     phoneNumber: "",
     password: "",
     role: "",
-    file: "",
+    file:"",
   });
- 
+
   const [error, setError] = useState(null);
-  console.log(error)
   const { loading, user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  dispatch(setLoading(false))
+  
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -38,7 +36,7 @@ const Signup = () => {
   };
 
   const changeEventHandler = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
+    setInput({ ...input,[e.target.name] : e.target.value });
   };
   const changeFileHandler = (e) => {
     setInput({ ...input, file: e.target.files?.[0] });
@@ -46,24 +44,21 @@ const Signup = () => {
 
   const validateUserInfo = (userInfo) => {
     try {
-      const {  file, ...rest } = userInfo;
-     
+      const { file, ...rest } = userInfo;
       const validatedData = signupInfoSchema.parse(rest);
+     
       setError(null);
       return true;
     } catch (error) {
-     
       const zodError = { ...error };
       // console.log("validation errors: ", zodError.issues);
       setError(zodError.issues.map((err) => err.message));
       return false;
     }
-    
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
     input.fullname = input.fullname.trim();
     if (!validateUserInfo(input)) return;
 
@@ -74,30 +69,29 @@ const Signup = () => {
     formData.append("password", input.password);
     formData.append("role", input.role);
     if (input.file) {
-        formData.append("file", input.file);
+      formData.append("file", input.file);
     }
-
+  
     try {
-        dispatch(setLoading(true));
-        const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
-            headers: { 'Content-Type': "multipart/form-data"},
-
-            withCredentials: true,
-        });
-        console.log(res)
-        if (res.data.success) {
-            console.log(res)
-            console.log(res.data);
-            console.log(res.data.success);
-            navigate("/login");
-            toast.success(res.data.message);
-        }
-        dispatch(setLoading(false))
+      dispatch(setLoading(true));
+      const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      });
+      console.log(res);
+      if (res.data.success) {
+        console.log(res);
+        console.log(res.data);
+        console.log(res.data.success);
+        navigate("/login");
+        toast.success(res.data.message);
+      }
+      dispatch(setLoading(false));
     } catch (error) {
-        // console.log(error);
-        toast.error(error.response.data.message);
-    } finally{
-        dispatch(setLoading(false));
+      // console.log(error);
+      toast.error(error.message);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -105,13 +99,13 @@ const Signup = () => {
     if (user) {
       navigate("/");
     }
-  }, []);
+  }, [user]);
   return (
     <div>
       <Navbar />
       <div className="flex items-center justify-center max-w-7xl mx-auto">
         <form
-          onSubmit={submitHandler}
+          onSubmit={(e) => submitHandler(e)}
           className="w-1/2 border border-gray-200 rounded-md p-4 my-10"
         >
           <h1 className="font-bold text-xl mb-5">Sign Up</h1>
@@ -149,7 +143,7 @@ const Signup = () => {
           <div className="my-2 relative">
             <Label>Password</Label>
             <Input
-              type={showPassword?'text':'password'}
+              type={showPassword ? "text" : "password"}
               value={input.password}
               name="password"
               onChange={changeEventHandler}
@@ -207,9 +201,12 @@ const Signup = () => {
               <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait{" "}
             </Button>
           ) : (
+            <>
             <Button type="submit" className="w-full my-4">
               Signup
             </Button>
+            <OAuth/>
+            </>
           )}
           <span className="text-sm">
             Already have an account?{" "}
@@ -219,7 +216,7 @@ const Signup = () => {
           </span>
         </form>
       </div>
-      {error && error.map((err=>toast.error(err)))}
+      {error && error.map((err) => toast.error(err))}
     </div>
   );
 };

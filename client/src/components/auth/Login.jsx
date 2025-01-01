@@ -13,6 +13,7 @@ import { USER_API_END_POINT } from '../utils/constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading, setUser } from '@/redux/authSlice';
 import { loginInfoSchema} from '../utils/formValidation';
+import OAuth from './OAuth';
 const Login = () => {
     const [input, setInput] = useState({
         email: "",
@@ -35,9 +36,9 @@ const Login = () => {
     };
 
     const validateLoginInfo=(loginInfo)=>{
-        const {role,...rest}=input
+        
         try {
-            const validatedInfo=loginInfoSchema.parse(rest)
+            const validatedInfo=loginInfoSchema.parse(loginInfo)
             setError(null)
             return true;
         } catch (error) {
@@ -145,7 +146,10 @@ const Login = () => {
                                 <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait
                             </Button>
                         ) : (
+                            <>
                             <Button type="submit" className="w-full my-4">Login</Button>
+                            <OAuth/>
+                            </> 
                         )
                     }
                     <span className='text-sm'>Don't have an account? <Link to="/signup" className='text-blue-600'>Signup</Link></span>
