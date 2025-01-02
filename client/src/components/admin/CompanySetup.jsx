@@ -13,7 +13,6 @@ import useGetCompanyById from '@/hooks/useGetCompanyById'
 import { companyInfoSchema } from '../utils/formValidation'
 
 const CompanySetup = () => {
-    const [error,setError]=useState(null)
     const params = useParams();
     useGetCompanyById(params.id);
     const [input, setInput] = useState({
@@ -40,15 +39,21 @@ const CompanySetup = () => {
         try {
             const {file,...rest}=companyInfo;
             companyInfoSchema.parse(rest)
+            return true;
         } catch (error) {
             const zodError={...error}
             // console.log("validate errors",zodError)
-            setError(zodError.issues.map(err=>err.message))
+            toast.error(zodError.issues[0].message);
+            return false;
         }
     }
     const submitHandler = async (e) => {
         e.preventDefault();
         if(!validateCompanyInfo(input)){
+            return;
+        }
+        if(!input.file) {
+            toast.error("Please select a logo.");
             return;
         }
         const formData = new FormData();
@@ -85,7 +90,7 @@ const CompanySetup = () => {
             description: singleCompany.description || "",
             website: singleCompany.website || "",
             location: singleCompany.location || "",
-            file: singleCompany.file || null
+            file: singleCompany.logo || null
         })
     },[singleCompany]);
 
