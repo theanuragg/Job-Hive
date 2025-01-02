@@ -55,6 +55,8 @@ const ApplicantsTable = () => {
                                 <TableCell>{item?.applicant.createdAt.split("T")[0]}</TableCell>
                                 <TableCell className="float-right cursor-pointer">
                                     <Popover>
+                                        <button className='mx-4 bg-orange-600 text-xs  px-2 py-1 rounded-lg text-white'>Send Offer Letter</button>
+                                        <button className='mx-4 bg-orange-500 text-xs  px-2 py-1 rounded-lg text-white'>Download Offer Letter</button>
                                         <PopoverTrigger>
                                             <MoreHorizontal />
                                         </PopoverTrigger>
@@ -69,6 +71,7 @@ const ApplicantsTable = () => {
                                                 })
                                             }
                                         </PopoverContent>
+                                        
                                     </Popover>
 
                                 </TableCell>
