@@ -77,6 +77,27 @@ git push -u origin <your_branch_name>
 
 <br><br>
 
+## Backend ENV
+```bash
+MONGODB_URI=
+PORT=
+SECRET_KEY=
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+```
+
+## Frontenv ENV
+```bash
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+```
+<br> <br>
+
 ## 🏆 Contribution Points
 Contributors can earn points based on the complexity of their tasks:
 - **🥇 Level 1**: 10 Points  
