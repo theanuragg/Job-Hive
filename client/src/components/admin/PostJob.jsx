@@ -157,8 +157,9 @@ const PostJob = () => {
                                 type="number"
                                 name="position"
                                 value={input.position}
-                                onChange={changeEventHandler}
-                                className="focus:ring focus:ring-indigo-300 my-1"
+                                min="1"
+                                onChange={(e)=>setInput({...input,position:Number(e.target.value)})}
+                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                             />
                         </div>
                         {
