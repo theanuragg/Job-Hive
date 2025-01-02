@@ -1,5 +1,5 @@
 // let BASE_URL = 'http://localhost:8000/api/v1';
-let BASE_URL = 'https://job-hive.onrender.com'
+let BASE_URL = 'https://job-hive.onrender.com/api/v1';
 
 export const USER_API_END_POINT = `${BASE_URL}/user`;
 export const JOB_API_END_POINT = `${BASE_URL}/job`;
