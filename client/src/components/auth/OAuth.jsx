@@ -19,6 +19,7 @@ const OAuth = () => {
     provider.setCustomParameters({ prompt: "select_account" });
     try {
       const resultsFromGoogle = await signInWithPopup(auth, provider);
+      console.log(resultsFromGoogle);
       const data = {
         name: resultsFromGoogle.user.displayName,
         email: resultsFromGoogle.user.email,
@@ -28,6 +29,7 @@ const OAuth = () => {
       setLoading(true)
       try {
         const res=await axios.post(`${USER_API_END_POINT}/google-oauth`,data,{withCredentials:true})
+        console.log(res)
         if(res.status===200 || res.status===201){
          
           dispatch(setUser(res.data.user))
