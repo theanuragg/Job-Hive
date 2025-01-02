@@ -9,12 +9,29 @@ import { COMPANY_API_END_POINT } from '../../components/utils/constants';
 import { toast } from 'sonner'
 import { useDispatch } from 'react-redux'
 import { setSingleCompany } from '@/redux/companySlice'
+import { companyNameSchema } from '../utils/formValidation'
+
+
 
 const CompanyCreate = () => {
     const navigate = useNavigate();
     const [companyName, setCompanyName] = useState();
     const dispatch = useDispatch();
+    const [error,setError]=useState(null)
+    const validateCompanyName=(company)=>{
+        try {
+            companyNameSchema.parse(company)
+            return true;
+        } catch (error) {
+            const zodError=({...error})
+            setError(zodError.issues.map(err=>err.message))
+            return false
+        }
+    }
     const registerNewCompany = async () => {
+        if(!validateCompanyName(companyName)){
+            return;
+        }
         try {
             const res = await axios.post(`${COMPANY_API_END_POINT}/register`, {companyName}, {
                 headers:{

@@ -10,6 +10,7 @@ import { JOB_API_END_POINT } from '../../components/utils/constants';
 import { toast } from 'sonner'
 import { useNavigate } from 'react-router-dom'
 import { Loader2 } from 'lucide-react'
+import { jobInfoSchema } from '../utils/formValidation'
 
 const companyArray = [];
 
@@ -25,6 +26,7 @@ const PostJob = () => {
         position: 0,
         companyId: ""
     });
+    const [error,setError]=useState(null)
     const [loading, setLoading]= useState(false);
     const navigate = useNavigate();
 
@@ -38,8 +40,24 @@ const PostJob = () => {
         setInput({...input, companyId:selectedCompany._id});
     };
 
+    const validateJobInfo=(input)=>{
+        try {
+            const {companyId,...rest}=input
+            const validatedData=jobInfoSchema.parse(rest)
+            setError(null)
+            return true;
+        } catch (error) {
+            const zodError={...error}
+            console.log("validate errors: ",zodError.issues)
+            setError(zodError.issues.map((err)=>err.message))
+            return false;
+        }
+    }
     const submitHandler = async (e) => {
         e.preventDefault();
+        if(!validateJobInfo(input)){
+            return;
+        }
         try {
             setLoading(true);
             const res = await axios.post(`${JOB_API_END_POINT}/post`, input,{

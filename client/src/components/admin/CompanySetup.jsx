@@ -10,8 +10,10 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useSelector } from 'react-redux'
 import useGetCompanyById from '@/hooks/useGetCompanyById'
+import { companyInfoSchema } from '../utils/formValidation'
 
 const CompanySetup = () => {
+    const [error,setError]=useState(null)
     const params = useParams();
     useGetCompanyById(params.id);
     const [input, setInput] = useState({
@@ -34,8 +36,21 @@ const CompanySetup = () => {
         setInput({ ...input, file });
     }
 
+    const validateCompanyInfo=(companyInfo)=>{
+        try {
+            const {file,...rest}=companyInfo;
+            companyInfoSchema.parse(rest)
+        } catch (error) {
+            const zodError={...error}
+            // console.log("validate errors",zodError)
+            setError(zodError.issues.map(err=>err.message))
+        }
+    }
     const submitHandler = async (e) => {
         e.preventDefault();
+        if(!validateCompanyInfo(input)){
+            return;
+        }
         const formData = new FormData();
         formData.append("name", input.name);
         formData.append("description", input.description);

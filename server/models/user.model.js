@@ -11,8 +11,7 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
     phoneNumber: {
-        type: Number,
-        required: true
+        type: Number,  
     },
     password:{
         type:String,
@@ -21,7 +20,6 @@ const userSchema = new mongoose.Schema({
     role:{
         type:String,
         enum:['student','recruiter'],
-        required:true
     },
     profile:{
         bio:{type:String},
