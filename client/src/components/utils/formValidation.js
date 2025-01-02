@@ -30,8 +30,8 @@ const companyNameSchema=z.string().nonempty({message:"Company Name can't be empt
 
 const companyInfoSchema=z.object({
     name: z.string().nonempty({message:"name is required"}),
-    description:z.string().nonempty({message:"name is required"}),
-    website:z.string().nonempty({message:"name is required"}).url({message:'invalid url'}),
-    location: z.string().nonempty({message:"name is required"}),
+    description:z.string().nonempty({message:"description is required"}),
+    website:z.string().nonempty({message:"url is required"}).url({message:'invalid url'}),
+    location: z.string().nonempty({message:"location is required"}),
 })
 export {signupInfoSchema,loginInfoSchema,jobInfoSchema,companyNameSchema,companyInfoSchema}
