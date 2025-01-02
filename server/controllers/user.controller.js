@@ -15,6 +15,7 @@ export const google = async (req, res) => {
         Math.random().toString(36).slice(-8) +
         Math.random().toString(36).slice(-8);
       const hashedPassword = await bcrypt.hash(generatedPassword, 10);
+
       const newUser = new User({
         fullname: name,
         email,
@@ -22,13 +23,15 @@ export const google = async (req, res) => {
         profile: {
           profilePhoto: googlePhotoURL,
         },
+        role: "student",
       });
+      
       await newUser.save();
       const tokenData = {
         userId: newUser._id,
       };
 
-      sendMail(email, `Hi, ${fullname}`, "", welcomeEmailHtml(fullname));
+      // sendMail(email, `Hi, ${fullname}`, "", welcomeEmailHtml(fullname));
       const token = jwt.sign(tokenData, process.env.SECRET_KEY, {
         expiresIn: "1d",
       });

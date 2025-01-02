@@ -36,8 +36,7 @@ const corsOptions = {
 
 app.use(cors(
     {
-      // origin:"http://localhost:5174",
-      origin:true,
+      origin:"*",
       methods: ["POST", "GET", "PATCH", "PUT", "DELETE"],
       credentials: true,
     }
