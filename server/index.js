@@ -8,6 +8,7 @@ import userRoute from "./routes/user.routes.js";
 import companyRoute from "./routes/company.routes.js";
 import jobRoute from "./routes/job.routes.js";
 import applicationRoute from "./routes/application.route.js";
+import { errorMiddleware } from "./middlewares/error.js";
 
 dotenv.config({});
 
@@ -78,3 +79,6 @@ app.listen(PORT,()=>{
     connectDB();
     console.log(`Server running at port ${PORT}`);
 })
+
+// Error handling middleware
+app.use(errorMiddleware);
