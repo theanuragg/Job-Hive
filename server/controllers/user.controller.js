@@ -199,8 +199,12 @@ export const updateProfile = async (req, res) => {
 
     const file = req.file;
     // cloudinary ayega idhar
-    const fileUri = getDataUri(file);
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    let fileUri, cloudResponse = null;
+    
+    if(file){
+        fileUri = getDataUri(file);
+        cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    }
 
     let skillsArray;
     if (skills) {
@@ -245,6 +249,6 @@ export const updateProfile = async (req, res) => {
       success: true,
     });
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 };
