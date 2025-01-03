@@ -9,49 +9,50 @@ import companyRoute from "./routes/company.routes.js";
 import jobRoute from "./routes/job.routes.js";
 import applicationRoute from "./routes/application.route.js";
 
-
-
 dotenv.config({});
 
 const app = express();
-
-// Serve the React build files
-// const __dirname = path.resolve();
-// console.log(__dirname);
-
-
 
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
+const allowedOrigins = [
+  "http://localhost:5173", // Development
+  "https://jobhive-vedansh.netlify.app", // Production
+];
+
+// Configure CORS middleware
 const corsOptions = {
-    // origin:true,
-    // credentials:true
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials':true,
-    'Access-Control-Allow-Methods':['POST','GET', "PUT", "DELETE"],
-    'Access-Control-Allow-Headers':'Content-Type'
-}
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
 
-app.use(cors(
-    {
-      // origin:"http://localhost:5174",
-      origin:true,
-      methods: ["POST", "GET", "PATCH", "PUT", "DELETE"],
-      credentials: true,
+    // Check if the origin is in the allowedOrigins list
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
     }
-  ));
+  },
+  methods: ["POST", "GET", "PATCH", "PUT", "DELETE"],
+  credentials: true, // Allow cookies and credentials
+};
 
-  app.use(function (req, res, next) {
-    // res.header('Access-Control-Allow-Origin', true,);
-    // res.header('Access-Control-Allow-Origin', "http://localhost:5174",);
-    res.header('Access-Control-Allow-Credentials', "true");
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-  });
+// Use CORS middleware
+app.use(cors(corsOptions));
 
-// app.use(cors(corsOptions));
+  // Fallback for setting headers
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
+
 
 const PORT = process.env.PORT || 3000;
 

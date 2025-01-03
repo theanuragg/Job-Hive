@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { useSelector } from 'react-redux'
 import useGetCompanyById from '@/hooks/useGetCompanyById'
+import { companyInfoSchema } from '../utils/formValidation'
 
 const CompanySetup = () => {
     const params = useParams();
@@ -34,8 +35,27 @@ const CompanySetup = () => {
         setInput({ ...input, file });
     }
 
+    const validateCompanyInfo=(companyInfo)=>{
+        try {
+            const {file,...rest}=companyInfo;
+            companyInfoSchema.parse(rest)
+            return true;
+        } catch (error) {
+            const zodError={...error}
+            // console.log("validate errors",zodError)
+            toast.error(zodError.issues[0].message);
+            return false;
+        }
+    }
     const submitHandler = async (e) => {
         e.preventDefault();
+        if(!validateCompanyInfo(input)){
+            return;
+        }
+        if(!input.file) {
+            toast.error("Please select a logo.");
+            return;
+        }
         const formData = new FormData();
         formData.append("name", input.name);
         formData.append("description", input.description);
@@ -70,7 +90,7 @@ const CompanySetup = () => {
             description: singleCompany.description || "",
             website: singleCompany.website || "",
             location: singleCompany.location || "",
-            file: singleCompany.file || null
+            file: singleCompany.logo || null
         })
     },[singleCompany]);
 

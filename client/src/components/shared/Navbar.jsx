@@ -9,8 +9,13 @@ import axios from 'axios'
 import { USER_API_END_POINT } from '../../components/utils/constants'
 import { setUser } from '@/redux/authSlice'
 import { toast } from 'sonner'
+import { useState } from 'react'
+import { MdMenu, MdClose } from 'react-icons/md';
+
 
 const Navbar = () => {
+    const [menuOpened, setMenuOpened] = useState(false);    
+    const toggleMenu = () => setMenuOpened(!menuOpened);
     const { user } = useSelector(store => store.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -30,12 +35,12 @@ const Navbar = () => {
     }
     return (
         <div className='bg-white'>
-            <div className='flex items-center justify-between mx-auto max-w-7xl h-16'>
+            <div className='flex items-center justify-between mx-auto max-w-7xl h-16 gap-4'>
                 <div>
                     <h1 className='text-2xl font-bold'>Job<span className='text-[#F83002]'>Hive</span></h1>
                 </div>
-                <div className='flex items-center gap-12'>
-                    <ul className='flex font-medium items-center gap-5'>
+                <div className='flex items-center gap-1 sm:gap-4'>
+                    <ul className='hidden md:flex font-medium items-center gap-5'>
                         {
                             user && user.role === 'recruiter' ? (
                                 <>
@@ -53,11 +58,35 @@ const Navbar = () => {
 
 
                     </ul>
+                    {/* mobile */}
+                    {menuOpened
+                    ? <MdClose color='#000' onClick={()=>toggleMenu(false)} className='visible md:invisible h-6 w-6 sm:h-8 sm:w-8'/>
+                    :  <MdMenu color='#000' onClick={()=>toggleMenu(true)} className='visible md:invisible h-6 w-6 sm:h-8 sm:w-8'/>
+                    }
+                    {menuOpened &&(
+                            <ul className='flex flex-col items-start fixed top-16 right-8 p-12 bg-white font-medium shadow-md w-64 transition-all duration-300 rounded-3xl gap-5'>
+                        {
+                            user && user.role === 'recruiter' ? (
+                                <>
+                                    <li><Link to="/admin/companies">Companies</Link></li>
+                                    <li><Link to="/admin/jobs">Jobs</Link></li>
+                                </>
+                            ) : (
+                                <>
+                                    <li><Link to="/">Home</Link></li>
+                                    <li><Link to="/jobs">Jobs</Link></li>
+                                    <li><Link to="/browse">Browse</Link></li>
+                                </>
+                            )
+                        }
+                    </ul>
+                    )}
+
                     {
                         !user ? (
                             <div className='flex items-center gap-2'>
-                                <Link to="/login"><Button variant="outline">Login</Button></Link>
-                                <Link to="/signup"><Button className="bg-[#6A38C2] hover:bg-[#5b30a6]">Signup</Button></Link>
+                                <Link to="/login"><Button variant="outline" className="h-8 w-16 sm:h-10 sm:w-20">Login</Button></Link>
+                                <Link to="/signup"><Button className="bg-[#6A38C2] hover:bg-[#5b30a6] h-8 w-16 sm:h-10 sm:w-20">Signup</Button></Link>
                             </div>
                         ) : (
                             <Popover>
@@ -70,7 +99,7 @@ const Navbar = () => {
                                     <div className=''>
                                         <div className='flex gap-2 space-y-2'>
                                             <Avatar className="cursor-pointer">
-                                                <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
+                                                <AvatarImage src={user?.profile?.profilePhoto || "https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Transparent-Free-PNG-Clip-Art.png"} alt="@shadcn" />
                                             </Avatar>
                                             <div>
                                                 <h4 className='font-medium'>{user?.fullname}</h4>
