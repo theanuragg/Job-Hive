@@ -67,14 +67,6 @@ app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 
-// app.use(express.static(path.join(__dirname, "/client/dist")));
-
-// app.get("*",(req,res)=>{
-//     res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
-// })
-
-
-
 app.listen(PORT,()=>{
     connectDB();
     console.log(`Server running at port ${PORT}`);
