@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
-import { welcomeEmailHtml, sendMail } from "../utils/sendMail.js";
 import ErrorHandler from "../utils/error.js";
 import { asyncError } from "../middlewares/error.js"
 
@@ -32,7 +31,6 @@ export const google = asyncError(async (req, res) => {
       userId: newUser._id,
     };
 
-    // sendMail(email, `Hi, ${fullname}`, "", welcomeEmailHtml(fullname));
     const token = jwt.sign(tokenData, process.env.SECRET_KEY, {
       expiresIn: "1d",
     });
@@ -101,8 +99,6 @@ export const register = asyncError(async (req, res, next) => {
         profilePhoto: cloudResponse.secure_url,
       },
     });
-
-    sendMail(email, `Hi, ${fullname}`, "", welcomeEmailHtml(fullname));
 
     return res.status(201).json({
       message: "Account created successfully.",
