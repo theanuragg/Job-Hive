@@ -21,6 +21,7 @@ app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:5173", // Development
   "https://jobhive-vedansh.netlify.app", // Production
+  "https://job-hive.onrender.com", // Production
 ];
 
 // Configure CORS middleware
@@ -69,7 +70,7 @@ app.use("/api/v1/application", applicationRoute);
 
 app.listen(PORT,()=>{
     connectDB();
-    console.log(`Server running at port ${PORT}`);
+    console.log(`Server running at ${process.env.BASE_URL || "http://localhost:" + PORT}`);
 })
 
 // Error handling middleware
