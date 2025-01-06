@@ -4,10 +4,12 @@ import { Bookmark } from 'lucide-react'
 import { Avatar, AvatarImage } from './ui/avatar'
 import { Badge } from './ui/badge'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Job = ({job}) => {
     const navigate = useNavigate();
     // const jobId = "lsekdhjgdsnfvsdkjf";
+    const { user } = useSelector(store=>store.auth);
 
     const daysAgoFunction = (mongodbTime) => {
         const createdAt = new Date(mongodbTime);
@@ -45,7 +47,9 @@ const Job = ({job}) => {
                 <Badge className={'text-[#7209b7] font-bold'} variant="ghost">{job?.salary}LPA</Badge>
             </div>
             <div className='flex items-center gap-4 mt-4'>
-                <Button onClick={()=> navigate(`/description/${job?._id}`)} variant="outline">Details</Button>
+                <Button
+                 onClick={()=> user ? navigate(`/description/${job?._id}`): navigate('/login')} 
+                 variant="outline">Details</Button>
                 <Button className="bg-[#7209b7]">Save For Later</Button>
             </div>
         </div>
