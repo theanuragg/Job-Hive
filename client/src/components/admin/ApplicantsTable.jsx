@@ -11,6 +11,8 @@ const shortlistingStatus = ["Accepted", "Rejected"];
 
 const ApplicantsTable = () => {
     const { applicants } = useSelector(store => store.application);
+    const { user } = useSelector(store => store.auth);
+    const [loading, setLoading] = React.useState(false);
 
     const statusHandler = async (status, id) => {
         // console.log('called');
@@ -25,6 +27,65 @@ const ApplicantsTable = () => {
             toast.error(error.response.data.message);
         }
     }
+
+    const sendOfferLetter = async(item) => {
+        try {
+            setLoading(true);
+            const selectedItems = {
+                    candidateName : item.applicant.fullname,
+                    jobTitle : applicants.title,
+                    companyId: applicants.company,
+                    salary: applicants.salary,
+                    location: applicants.location,
+                    recruiterName: user.fullname,
+                    userEmail: item.applicant.email
+            };
+
+           axios.defaults.withCredentials = true;
+            const { data } = await axios.post(`${APPLICATION_API_END_POINT}/send-offer-letter`, selectedItems);
+
+            if(data.success){
+                toast.success(data.message);
+            }
+        } catch (error) {
+            console.log(error);
+           toast.error(error.response.data.message); 
+        }finally{
+            setLoading(false);
+        }
+    }
+
+    const downloadOfferLetter = async (item) => {
+         try {
+            const offerDetails = {
+                    candidateName : item.applicant.fullname,
+                    jobTitle : applicants.title,
+                    companyId: applicants.company,
+                    salary: applicants.salary,
+                    location: applicants.location,
+                    recruiterName: user.fullname,
+                    userEmail: item.applicant.email
+            };
+            axios.defaults.withCredentials = true;
+            const { data } = await axios.post(
+                `${APPLICATION_API_END_POINT}/download-offer-letter`,
+                offerDetails,
+                { responseType: "blob" } 
+            );
+            console.log(data)
+            const blob = new Blob([data], { type: "application/pdf" });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `Offer_Letter_${offerDetails.candidateName}.pdf`;
+            a.click();
+            window.URL.revokeObjectURL(url);
+            toast.success("Offer letter downloaded successfully");
+        } catch (error) {
+            console.error("Error downloading offer letter:", error);
+            toast.error(error.response.data.message);
+        }
+    };
 
     return (
         <div>
@@ -42,7 +103,7 @@ const ApplicantsTable = () => {
                 </TableHeader>
                 <TableBody>
                     {
-                        applicants && applicants?.applications?.map((item) => (
+                        applicants && applicants?.applications?.map((item,index) => (
                             <tr key={item._id}>
                                 <TableCell>{item?.applicant?.fullname}</TableCell>
                                 <TableCell>{item?.applicant?.email}</TableCell>
@@ -55,8 +116,16 @@ const ApplicantsTable = () => {
                                 <TableCell>{item?.applicant.createdAt.split("T")[0]}</TableCell>
                                 <TableCell className="float-right cursor-pointer">
                                     <Popover>
-                                        <button className='mx-4 bg-orange-600 text-xs  px-2 py-1 rounded-lg text-white'>Send Offer Letter</button>
-                                        <button className='mx-4 bg-orange-500 text-xs  px-2 py-1 rounded-lg text-white'>Download Offer Letter</button>
+                                        <button className='mx-4 bg-orange-600 text-xs  px-2 py-1 rounded-lg text-white'
+                                        onClick={() => sendOfferLetter(item,index)}
+                                        disabled={loading}
+                                        >
+                                            {loading ? 'Sending...' : 'Send Offer Letter'}
+                                        </button>
+                                        <button className='mx-4 bg-orange-500 text-xs  px-2 py-1 rounded-lg text-white'
+                                        onClick={() => downloadOfferLetter(item)}
+                                        disabled={loading}
+                                        >Download Offer Letter</button>
                                         <PopoverTrigger>
                                             <MoreHorizontal />
                                         </PopoverTrigger>
