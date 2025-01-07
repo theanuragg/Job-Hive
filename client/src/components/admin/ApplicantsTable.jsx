@@ -13,6 +13,7 @@ const ApplicantsTable = () => {
     const { applicants } = useSelector(store => store.application);
     const { user } = useSelector(store => store.auth);
     const [loading, setLoading] = React.useState(false);
+    const [downloading, setDownloading] = React.useState(false);
 
     const statusHandler = async (status, id) => {
         // console.log('called');
@@ -57,6 +58,7 @@ const ApplicantsTable = () => {
 
     const downloadOfferLetter = async (item) => {
          try {
+            setDownloading(true);
             const offerDetails = {
                     candidateName : item.applicant.fullname,
                     jobTitle : applicants.title,
@@ -72,7 +74,6 @@ const ApplicantsTable = () => {
                 offerDetails,
                 { responseType: "blob" } 
             );
-            console.log(data)
             const blob = new Blob([data], { type: "application/pdf" });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
@@ -84,6 +85,8 @@ const ApplicantsTable = () => {
         } catch (error) {
             console.error("Error downloading offer letter:", error);
             toast.error(error.response.data.message);
+        }finally{
+            setDownloading(false);
         }
     };
 
@@ -124,8 +127,8 @@ const ApplicantsTable = () => {
                                         </button>
                                         <button className='mx-4 bg-orange-500 text-xs  px-2 py-1 rounded-lg text-white'
                                         onClick={() => downloadOfferLetter(item)}
-                                        disabled={loading}
-                                        >Download Offer Letter</button>
+                                        disabled={downloading}
+                                        >{downloading ? "Downloading" : "Download Offer Letter"}</button>
                                         <PopoverTrigger>
                                             <MoreHorizontal />
                                         </PopoverTrigger>
