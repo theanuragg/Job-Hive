@@ -18,7 +18,7 @@ const loginInfoSchema=z.object({
 const jobInfoSchema=z.object({
         title:z.string().nonempty({message:'title is required'}),
         description:z.string().nonempty({message:'description is required'}) ,
-        requirements: z.string().nonempty({message:'requirements is required'}),
+        requirements: z.array(z.string().nonempty({message:'requirements is required'})),
         salary: z.string().nonempty({message:'salary is required'}),
         location: z.string().nonempty({message:'location is required'}),
         jobType: z.string().nonempty({message:'job type is required'}),
