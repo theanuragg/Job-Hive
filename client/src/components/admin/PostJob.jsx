@@ -48,7 +48,6 @@ const PostJob = () => {
             return true;
         } catch (error) {
             const zodError={...error}
-            console.log("validate errors: ",zodError.issues)
             toast.error(zodError.issues[0].message)
             return false;
         }
@@ -61,7 +60,7 @@ const PostJob = () => {
         try {
             setLoading(true);
             axios.defaults.withCredentials = true;
-            const res = await axios.post(`${JOB_API_END_POINT}/post`, { input },{
+            const res = await axios.post(`${JOB_API_END_POINT}/post`, { ...input },{
                 headers: {
                     "Content-Type": "application/json"
                 }
@@ -80,6 +79,15 @@ const PostJob = () => {
     const selectJobTypeHandler = (value) => {
         setInput({ ...input, jobType: value });
     }
+
+    const handleRequirementsChange = (e) => {
+        const values = e.target.value
+            .split(",")
+            .map((req) => req.trim()) 
+            .filter((req) => req);    
+        setInput((prev) => ({ ...prev, requirements: values }));
+    };
+
 
     return (
         <div>
@@ -189,8 +197,8 @@ const PostJob = () => {
                         <Label>Requirements</Label>
                         <Input
                             type="text"
-                            value={input.requirements}
-                            onChange={(e) => setInput({ ...input, requirements: e.target.value.split(",") })}
+                            value={input.requirements.join(", ")}
+                            onChange={handleRequirementsChange}
                             className="my-1 focus:ring focus:ring-indigo-300"
                             placeholder="Add new requirement separated by comma"
                         />
