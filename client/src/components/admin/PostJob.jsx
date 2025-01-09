@@ -61,7 +61,6 @@ const PostJob = () => {
         try {
             setLoading(true);
             axios.defaults.withCredentials = true;
-            console.log(input)
             const res = await axios.post(`${JOB_API_END_POINT}/post`, { input },{
                 headers: {
                     "Content-Type": "application/json"
@@ -72,7 +71,6 @@ const PostJob = () => {
                 navigate("/admin/jobs");
             }
         } catch (error) {
-            console.log(error.message)
             toast.error(error.response.data.message);
         } finally {
             setLoading(false);
