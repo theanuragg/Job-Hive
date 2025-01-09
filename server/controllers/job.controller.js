@@ -4,7 +4,7 @@ import ErrorHandler from "../utils/error.js"
 
 // admin post krega job
 export const postJob = asyncError(async (req, res, next) => {
-    const { title, description, requirements, salary, location, jobType, experience, position, companyId } = req.body;
+    const { title, description, requirements, salary, location, jobType, experience, position, companyId } = req.body.input;
     const userId = req.id;
 
     if (!title || !description || !requirements || !salary || !location || !jobType || !experience || !position || !companyId) {
@@ -13,7 +13,7 @@ export const postJob = asyncError(async (req, res, next) => {
     const job = await Job.create({
         title,
         description,
-        requirements: requirements.split(","),
+        requirements: JSON.stringify(requirements).split(","),
         salary: Number(salary),
         location,
         jobType,
