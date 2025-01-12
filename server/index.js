@@ -8,6 +8,7 @@ import userRoute from "./routes/user.routes.js";
 import companyRoute from "./routes/company.routes.js";
 import jobRoute from "./routes/job.routes.js";
 import applicationRoute from "./routes/application.route.js";
+import { errorMiddleware } from "./middlewares/error.js";
 
 dotenv.config({});
 
@@ -20,6 +21,7 @@ app.use(cookieParser());
 const allowedOrigins = [
   "http://localhost:5173", // Development
   "https://jobhive-vedansh.netlify.app", // Production
+  "https://job-hive.onrender.com", // Production
 ];
 
 // Configure CORS middleware
@@ -66,15 +68,10 @@ app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 
-// app.use(express.static(path.join(__dirname, "/client/dist")));
-
-// app.get("*",(req,res)=>{
-//     res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
-// })
-
-
-
 app.listen(PORT,()=>{
     connectDB();
-    console.log(`Server running at port ${PORT}`);
+    console.log(`Server running at ${process.env.BASE_URL || "http://localhost:" + PORT}`);
 })
+
+// Error handling middleware
+app.use(errorMiddleware);
