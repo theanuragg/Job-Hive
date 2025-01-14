@@ -23,4 +23,4 @@ const useGetCompanyById = (companyId) => {
     },[companyId, dispatch])
 }
 
-export default useGetCompanyById
+export default useGetCompanyById;
