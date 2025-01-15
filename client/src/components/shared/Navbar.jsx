@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
-import { Button } from '../ui/button'
-import { Avatar, AvatarImage } from '../ui/avatar'
-import { LogOut, User2 } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
-import { USER_API_END_POINT } from '../../components/utils/constants'
-import { setUser } from '@/redux/authSlice'
-import { toast } from 'sonner'
-import { useState } from 'react'
+import React, { useState } from 'react';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Button } from '../ui/button';
+import { Avatar, AvatarImage } from '../ui/avatar';
+import { LogOut, User2 } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { USER_API_END_POINT } from '../../components/utils/constants';
+import { setUser } from '@/redux/authSlice';
+import { toast } from 'sonner';
 import { MdMenu, MdClose } from 'react-icons/md';
 import { Skeleton } from '../ui/skeleton'
 
-
+// Navbar Component
 const Navbar = () => {
+
     const [menuOpened, setMenuOpened] = useState(false);    
     const [profileShow, setProfileShow] = useState(false);
     const toggleMenu = () => setMenuOpened(!menuOpened);
@@ -64,7 +64,9 @@ const Navbar = () => {
                                 <>
                                     <li><Link to="/">Home</Link></li>
                                     <li><Link to="/jobs">Jobs</Link></li>
+                                    <li><Link to="/roadmaps">roadmaps</Link></li>
                                     <li><Link to="/browse">Browse</Link></li>
+
                                 </>
                             )
                         }
