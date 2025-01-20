@@ -55,6 +55,13 @@ app.use((req, res, next) => {
 });
 
 
+import admin from 'firebase-admin';
+import serviceAccount from './utils/firebase-adminsdk.json' assert { type: "json" };
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+process.env.GOOGLE_APPLICATION_CREDENTIALS;
 
 const PORT = process.env.PORT || 3000;
 

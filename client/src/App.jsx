@@ -17,6 +17,11 @@ import Applicants from './components/admin/Applicants'
 import ProtectedRoute from './components/admin/ProtectedRoute'
 import Roadmaps from './components/Roadmaps'
 import RoadmapView from './components/RoadmapView'
+import { messaging } from './components/utils/firebase'
+import { getToken } from 'firebase/messaging'
+import { useEffect } from 'react'
+import { setToken } from './redux/firebaseTokenSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const appRouter = createBrowserRouter([
   {
@@ -84,6 +89,27 @@ const appRouter = createBrowserRouter([
 ]);
 
 function App() {
+  const dispatch = useDispatch();
+  async function requestPermission() {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      // Generate Token
+      const token = await getToken(messaging, {
+        vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
+      });
+      console.log(token);
+
+      dispatch(setToken(token))
+
+    } else if (permission === "denied") {
+      alert("You denied for the notification");
+    }
+  }
+  
+  useEffect(() => {
+    requestPermission();
+  }, []);
+
   return (
     <div>
       <RouterProvider router={appRouter} />
