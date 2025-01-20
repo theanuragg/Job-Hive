@@ -100,9 +100,9 @@ VITE_FIREBASE_APP_ID=
 
 ## 🏆 Contribution Points
 Contributors can earn points based on the complexity of their tasks:
-- **🥇 Level 1**: 10 Points  
-- **🥈 Level 2**: 25 Points  
-- **🥉 Level 3**: 45 Points
+- **🥇 Beginner**: 20 Points  
+- **🥈 Intermediate**: 30 Points  
+- **🥉 Advance**: 40 Points
 <br> <br>
 
 

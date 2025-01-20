@@ -12,8 +12,6 @@ import { useNavigate } from 'react-router-dom'
 import { Loader2 } from 'lucide-react'
 import { jobInfoSchema } from '../utils/formValidation'
 
-const companyArray = [];
-
 const PostJob = () => {
     const [input, setInput] = useState({
         title: "",
@@ -23,11 +21,12 @@ const PostJob = () => {
         jobType: "", // This is used for job type selection
         experience: "",
         position: 0,
-        companyId: "" // This is used for company selection
+        companyId: "" ,// This is used for company selection
+        requirements: []
     });
-    const [error,setError]=useState(null)
     const [loading, setLoading]= useState(false);
     const navigate = useNavigate();
+    
 
     const { companies } = useSelector(store => store.company);
     const changeEventHandler = (e) => {
@@ -45,13 +44,11 @@ const PostJob = () => {
     const validateJobInfo=(input)=>{
         try {
             const {companyId,...rest}=input
-            const validatedData=jobInfoSchema.parse(rest)
-            setError(null)
+            jobInfoSchema.parse(rest)
             return true;
         } catch (error) {
             const zodError={...error}
-            console.log("validate errors: ",zodError.issues)
-            setError(zodError.issues.map((err)=>err.message))
+            toast.error(zodError.issues[0].message)
             return false;
         }
     }
@@ -62,11 +59,11 @@ const PostJob = () => {
         }
         try {
             setLoading(true);
-            const res = await axios.post(`${JOB_API_END_POINT}/post`, { ...input, requirements }, {
+            axios.defaults.withCredentials = true;
+            const res = await axios.post(`${JOB_API_END_POINT}/post`, { ...input },{
                 headers: {
-                    'Content-Type': 'application/json'
-                },
-                withCredentials: true
+                    "Content-Type": "application/json"
+                }
             });
             if (res.data.success) {
                 toast.success(res.data.message);
@@ -78,6 +75,19 @@ const PostJob = () => {
             setLoading(false);
         }
     };
+
+    const selectJobTypeHandler = (value) => {
+        setInput({ ...input, jobType: value });
+    }
+
+    const handleRequirementsChange = (e) => {
+        const values = e.target.value
+            .split(",")
+            .map((req) => req.trim()) 
+            .filter((req) => req);    
+        setInput((prev) => ({ ...prev, requirements: values }));
+    };
+
 
     return (
         <div>
@@ -131,7 +141,7 @@ const PostJob = () => {
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Select Job Type" />
                                 </SelectTrigger>
-                                <SelectContent>
+                                <SelectContent className="bg-white">
                                     <SelectGroup>
                                         <SelectItem value="onsite">On Site</SelectItem>
                                         <SelectItem value="hybrid">Hybrid</SelectItem>
@@ -170,7 +180,7 @@ const PostJob = () => {
                                         <SelectTrigger className="w-full">
                                             <SelectValue placeholder="Select a Company" />
                                         </SelectTrigger>
-                                        <SelectContent>
+                                        <SelectContent className="bg-white">
                                             <SelectGroup>
                                                 {companies.map((company) => (
                                                     <SelectItem key={company._id} value={company?.name?.toLowerCase()}>{company.name}</SelectItem>
@@ -185,26 +195,12 @@ const PostJob = () => {
 
                     <div className='my-6'>
                         <Label>Requirements</Label>
-                        <div className="flex flex-wrap gap-3 mb-3">
-                            {requirements.map((requirement, index) => (
-                                <div key={index} className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full flex items-center space-x-2">
-                                    <span>{requirement}</span>
-                                    <button 
-                                        type="button" 
-                                        onClick={() => removeRequirement(index)} 
-                                        className="hover:text-red-500 transition duration-200 ease-in-out">
-                                        &times;
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
                         <Input
                             type="text"
-                            value={requirementInput}
-                            onChange={(e) => setRequirementInput(e.target.value)}
-                            onKeyDown={addRequirement}
+                            value={input.requirements.join(", ")}
+                            onChange={handleRequirementsChange}
                             className="my-1 focus:ring focus:ring-indigo-300"
-                            placeholder="Add new requirement and press Enter"
+                            placeholder="Add new requirement separated by comma"
                         />
                     </div>
 
