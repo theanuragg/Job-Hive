@@ -14,6 +14,7 @@ import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from './components/admin/PostJob'
 import Applicants from './components/admin/Applicants'
 import ProtectedRoute from './components/admin/ProtectedRoute'
+import AdminDashboard from './components/Admins/AdminDashboard'
 
 
 const appRouter = createBrowserRouter([
@@ -46,6 +47,10 @@ const appRouter = createBrowserRouter([
     element: <Profile />
   },
   // admin ke liye yha se start hoga
+  {
+    path:"/admin",
+    element: <AdminDashboard/>
+  },
   {
     path:"/admin/companies",
     element: <ProtectedRoute><Companies/></ProtectedRoute>
