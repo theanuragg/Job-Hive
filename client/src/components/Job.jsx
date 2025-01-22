@@ -5,11 +5,13 @@ import { Avatar, AvatarImage } from './ui/avatar'
 import { Badge } from './ui/badge'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { Skeleton } from './ui/skeleton'
 
 const Job = ({job}) => {
     const navigate = useNavigate();
     // const jobId = "lsekdhjgdsnfvsdkjf";
     const { user } = useSelector(store=>store.auth);
+    const { isLoading } = useSelector(store=>store.job);
 
     const daysAgoFunction = (mongodbTime) => {
         const createdAt = new Date(mongodbTime);
@@ -17,7 +19,6 @@ const Job = ({job}) => {
         const timeDifference = currentTime - createdAt;
         return Math.floor(timeDifference/(1000*24*60*60));
     }
-    
     return (
         <div className='p-5 rounded-md shadow-xl bg-white border border-gray-100'>
             <div className='flex items-center justify-between'>
@@ -28,7 +29,9 @@ const Job = ({job}) => {
             <div className='flex items-center gap-2 my-2'>
                 <Button className="p-6" variant="outline" size="icon">
                     <Avatar>
-                        <AvatarImage src={job?.company?.logo} />
+                    {
+                        isLoading ? <Skeleton className="w-10 h-10 rounded-full bg-gray-400" /> : <AvatarImage src={job?.company?.logo} />
+                    }
                     </Avatar>
                 </Button>
                 <div>
