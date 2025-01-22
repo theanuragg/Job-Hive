@@ -34,6 +34,7 @@ const Footer = () => {
             </p>
             <p className="mt-2 text-gray-600">+1 246-345-0695</p>
             <p className="mt-2 text-gray-600">info@jobhunt.com</p>
+
           </div>
 
           {/* About Us */}
@@ -111,6 +112,27 @@ const Footer = () => {
               <button className="bg-red-500 hover:bg-purple-700 transition-all duration-300 px-6 py-3 text-white rounded-r-full">
                 <HiArrowRight size={20} />
               </button>
+
+            </div>
+          </div>
+
+          {/* Help Section */}
+          <div>
+            <h3 className="text-lg font-semibold text-purple-700">
+              Still Need Help?
+            </h3>
+            <p className="mt-4 text-gray-600">
+              Let us know about your issue, and a professional will reach out.
+            </p>
+            <div className="mt-4 flex items-center rounded-full shadow-lg hover:shadow-xl focus-within:ring-2 focus-within:ring-purple-500 transition-all duration-300">
+              <input
+                type="email"
+                placeholder="Enter Valid Email Address"
+                className="flex-1 px-4 py-3 rounded-l-full outline-none text-gray-700"
+              />
+              <button className="bg-red-500 hover:bg-purple-700 transition-all duration-300 px-6 py-3 text-white rounded-r-full">
+                <HiArrowRight size={20} />
+              </button>
             </div>
           </div>
         </div>
@@ -119,6 +141,13 @@ const Footer = () => {
         <div className="border-t border-gray-300 pt-6 mt-6 text-center">
           <p className="text-gray-600 text-sm">
             &copy; {currentYear} Job Hive. All rights reserved.
+          </p>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="border-t border-gray-300 pt-6 mt-6 text-center">
+          <p className="text-gray-600 text-sm">
+            © 2024 Job Hunt. All rights reserved.
           </p>
         </div>
       </div>

@@ -67,6 +67,8 @@ const Navbar = () => {
                                     <li><Link to="/roadmaps">roadmaps</Link></li>
                                     <li><Link to="/browse">Browse</Link></li>
 
+                                    <li><Link to="/admin">Post Job</Link></li>
+
                                 </>
                             )
                         }

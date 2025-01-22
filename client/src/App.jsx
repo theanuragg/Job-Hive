@@ -1,6 +1,7 @@
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Navbar from './components/shared/Navbar'
+import AdminDashboard from './components/Admins/AdminDashboard'
 import { messaging } from './components/utils/firebase'
 import { getToken } from 'firebase/messaging'
 import { useEffect } from 'react'
@@ -59,8 +60,14 @@ const appRouter = createBrowserRouter([
     element: <Roadmaps />
   },
   {
-    path: "/roadmaps/:id",
-    element: <RoadmapView />
+
+    path:"/admin",
+    element: <AdminDashboard/>
+  },
+  {
+    path:"/admin/companies",
+    element: <ProtectedRoute><Companies/></ProtectedRoute>
+
   },
   // Admin routes
   {
