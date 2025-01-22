@@ -57,6 +57,8 @@ const Signup = () => {
     }
   };
 
+  const firebaseToken = useSelector((state) => state.firebaseToken.token);
+
   const submitHandler = async (e) => {
     e.preventDefault();
     input.fullname = input.fullname.trim();
@@ -68,6 +70,7 @@ const Signup = () => {
     formData.append("phoneNumber", input.phoneNumber);
     formData.append("password", input.password);
     formData.append("role", input.role);
+    formData.append("fcmToken", firebaseToken);
     if (input.file) {
       formData.append("file", input.file);
     }
@@ -78,17 +81,12 @@ const Signup = () => {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
-      console.log(res);
+      
       if (res.data.success) {
-        console.log(res);
-        console.log(res.data);
-        console.log(res.data.success);
         navigate("/login");
         toast.success(res.data.message);
       }
-      dispatch(setLoading(false));
     } catch (error) {
-      // console.log(error);
       toast.error(error.message);
     } finally {
       dispatch(setLoading(false));

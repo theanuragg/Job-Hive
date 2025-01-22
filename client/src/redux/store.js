@@ -5,6 +5,7 @@ import authSlice from './authSlice';
 import jobSlice from './jobSlice';
 import companySlice from './companySlice';
 import applicationSlice from './applicationSlice';
+import firebaseTokenSlice from './firebaseTokenSlice';
 
 // Redux Persist configuration
 const persistConfig = {
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   job: jobSlice,
   company: companySlice,
   application: applicationSlice,
+  firebaseToken: firebaseTokenSlice
 });
 
 // Apply persisted reducer

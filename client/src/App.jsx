@@ -1,5 +1,11 @@
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Navbar from './components/shared/Navbar'
+import { messaging } from './components/utils/firebase'
+import { getToken } from 'firebase/messaging'
+import { useEffect } from 'react'
+import { setToken } from './redux/firebaseTokenSlice'
+import { useDispatch, useSelector } from 'react-redux'
 import { lazy, Suspense } from 'react'
 const Login = lazy(() => import('./components/auth/Login'))
 const Signup = lazy(() => import('./components/auth/Signup'))
@@ -84,6 +90,27 @@ const appRouter = createBrowserRouter([
 ]);
 
 function App() {
+  const dispatch = useDispatch();
+  async function requestPermission() {
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") {
+      // Generate Token
+      const token = await getToken(messaging, {
+        vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY,
+      });
+      console.log(token);
+
+      dispatch(setToken(token))
+
+    } else if (permission === "denied") {
+      alert("You denied for the notification");
+    }
+  }
+  
+  useEffect(() => {
+    requestPermission();
+  }, []);
+
   return (
     <div>
       <Suspense>
