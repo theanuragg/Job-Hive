@@ -1,27 +1,28 @@
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Navbar from './components/shared/Navbar'
-import Login from './components/auth/Login'
-import Signup from './components/auth/Signup'
-import Home from './components/Home'
-import Jobs from './components/Jobs'
-import Browse from './components/Browse'
-import Profile from './components/Profile'
-import JobDescription from './components/JobDescription'
-import Companies from './components/admin/Companies'
-import CompanyCreate from './components/admin/CompanyCreate'
-import CompanySetup from './components/admin/CompanySetup'
-import AdminJobs from "./components/admin/AdminJobs"
-import PostJob from './components/admin/PostJob'
-import Applicants from './components/admin/Applicants'
-import ProtectedRoute from './components/admin/ProtectedRoute'
-import Roadmaps from './components/Roadmaps'
-import RoadmapView from './components/RoadmapView'
 import { messaging } from './components/utils/firebase'
 import { getToken } from 'firebase/messaging'
 import { useEffect } from 'react'
 import { setToken } from './redux/firebaseTokenSlice'
 import { useDispatch, useSelector } from 'react-redux'
+import { lazy, Suspense } from 'react'
+const Login = lazy(() => import('./components/auth/Login'))
+const Signup = lazy(() => import('./components/auth/Signup'))
+const Home = lazy(() => import('./components/Home'))
+const Jobs = lazy(() => import('./components/Jobs'))
+const Browse = lazy(() => import('./components/Browse'))
+const Profile = lazy(() => import('./components/Profile'))
+const JobDescription = lazy(() => import('./components/JobDescription'))
+const Companies = lazy(() => import('./components/admin/Companies'))
+const CompanyCreate = lazy(() => import('./components/admin/CompanyCreate'))
+const CompanySetup = lazy(() => import('./components/admin/CompanySetup'))
+const AdminJobs = lazy(() => import("./components/admin/AdminJobs"));
+const PostJob = lazy(() => import('./components/admin/PostJob'))
+const Applicants = lazy(() => import('./components/admin/Applicants'))
+const ProtectedRoute = lazy(() => import('./components/admin/ProtectedRoute'))
+const Roadmaps = lazy(() => import('./components/Roadmaps'))
+const RoadmapView = lazy(() => import('./components/RoadmapView'))
 
 const appRouter = createBrowserRouter([
   {
@@ -112,7 +113,9 @@ function App() {
 
   return (
     <div>
-      <RouterProvider router={appRouter} />
+      <Suspense>
+        <RouterProvider router={appRouter} />
+      </Suspense>
     </div>
   );
 }

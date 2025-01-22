@@ -5,9 +5,10 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Edit2, MoreHorizontal } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { Skeleton } from '../ui/skeleton'
 
 const CompaniesTable = () => {
-    const { companies, searchCompanyByText } = useSelector(store => store.company);
+    const { companies, searchCompanyByText, isLoading } = useSelector(store => store.company);
     const [filterCompany, setFilterCompany] = useState(companies);
     const navigate = useNavigate();
     useEffect(()=>{
@@ -38,7 +39,10 @@ const CompaniesTable = () => {
                             <tr>
                                 <TableCell>
                                     <Avatar>
+                                    {
+                                        isLoading ? <Skeleton className="h-10 w-10 rounded-full bg-gray-400" /> :
                                         <AvatarImage src={company.logo}/>
+                                    }
                                     </Avatar>
                                 </TableCell>
                                 <TableCell>{company.name}</TableCell>
