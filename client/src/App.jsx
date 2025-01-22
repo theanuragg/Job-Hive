@@ -1,7 +1,7 @@
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Navbar from './components/shared/Navbar'
-import AdminDashboard from './components/Admins/AdminDashboard'
+// import AdminDashboard from './components/Admins/AdminDashboard' this is creating an error
 import { messaging } from './components/utils/firebase'
 import { getToken } from 'firebase/messaging'
 import { useEffect } from 'react'
@@ -62,7 +62,7 @@ const appRouter = createBrowserRouter([
   {
 
     path:"/admin",
-    element: <AdminDashboard/>
+    // element: <AdminDashboard/>
   },
   {
     path:"/admin/companies",
