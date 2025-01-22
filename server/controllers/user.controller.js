@@ -5,6 +5,8 @@ import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
 import ErrorHandler from "../utils/error.js";
 import { asyncError } from "../middlewares/error.js"
+import admin from 'firebase-admin';
+import serviceAccount from '../utils/firebase-adminsdk.json' assert { type: "json" };
 
 export const google = asyncError(async (req, res) => {
   const { name, email, googlePhotoURL } = req.body;
@@ -68,7 +70,7 @@ export const google = asyncError(async (req, res) => {
 });
 
 export const register = asyncError(async (req, res, next) => {
-    const { fullname, email, phoneNumber, password, role } = req.body;
+    const { fullname, email, phoneNumber, password, role, fcmToken } = req.body;
    
    
     if (!fullname || !email || !phoneNumber || !password || !role) {
@@ -100,6 +102,23 @@ export const register = asyncError(async (req, res, next) => {
       },
     });
 
+    const message = {
+      notification: {
+        title: `Welcome to Job-Hive, ${fullname}`,
+        body: `🎉 Your journey to exciting opportunities starts here. Complete your profile to unlock personalized job recommendations and connect with top recruiters!`,
+        image: "https://st4.depositphotos.com/17797916/20070/v/450/depositphotos_200702984-stock-illustration-job-logo-icon-design-vector.jpg"
+      },
+      token: fcmToken,
+    };
+
+    admin.messaging().send(message)
+    .then((response) => {
+      console.log("Successfully sent message:", response);
+    })
+    .catch((error) => {
+      console.log("Error sending message:", error);
+    });
+      
     return res.status(201).json({
       message: "Account created successfully.",
       success: true,

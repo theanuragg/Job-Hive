@@ -9,6 +9,7 @@ import AppliedJobTable from './AppliedJobTable'
 import UpdateProfileDialog from './UpdateProfileDialog'
 import { useSelector } from 'react-redux'
 import useGetAppliedJobs from '@/hooks/useGetAppliedJobs'
+import { Skeleton } from './ui/skeleton'
 
 // const skills = ["Html", "Css", "Javascript", "Reactjs"]
 const isResume = true;
@@ -16,7 +17,7 @@ const isResume = true;
 const Profile = () => {
     useGetAppliedJobs();
     const [open, setOpen] = useState(false);
-    const {user} = useSelector(store=>store.auth);
+    const {user,loading} = useSelector(store=>store.auth);
 
     return (
         <div>
@@ -25,7 +26,10 @@ const Profile = () => {
                 <div className='flex justify-between'>
                     <div className='flex items-center gap-4'>
                         <Avatar className="h-24 w-24">
+                        {
+                            loading ? <Skeleton className="h-10 w-10 rounded-full bg-gray-400" /> :
                             <AvatarImage src={user?.profile.profilePhoto} alt="profile" />
+                        }
                         </Avatar>
                         <div>
                             <h1 className='font-medium text-xl'>{user?.fullname}</h1>

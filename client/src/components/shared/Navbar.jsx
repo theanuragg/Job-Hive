@@ -10,13 +10,16 @@ import { USER_API_END_POINT } from '../../components/utils/constants';
 import { setUser } from '@/redux/authSlice';
 import { toast } from 'sonner';
 import { MdMenu, MdClose } from 'react-icons/md';
+import { Skeleton } from '../ui/skeleton'
 
 // Navbar Component
 const Navbar = () => {
 
     const [menuOpened, setMenuOpened] = useState(false);    
+    const [profileShow, setProfileShow] = useState(false);
     const toggleMenu = () => setMenuOpened(!menuOpened);
     const { user } = useSelector(store => store.auth);
+    const { isLoading } = useSelector(store => store.company);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -31,6 +34,16 @@ const Navbar = () => {
         } catch (error) {
             // console.log(error);
             toast.error(error.response.data.message);
+        }
+    }
+
+    const handlePopOverChange = (open) => {
+        if(open){
+            setTimeout(() => {
+                setProfileShow(true);
+            },500);
+        }else{
+            setProfileShow(false);
         }
     }
     return (
@@ -93,18 +106,24 @@ const Navbar = () => {
                                 <Link to="/signup"><Button className="bg-[#6A38C2] hover:bg-[#5b30a6] h-8 w-16 sm:h-10 sm:w-20">Signup</Button></Link>
                             </div>
                         ) : (
-                            <Popover>
+                            <Popover onOpenChange={handlePopOverChange}>
                                 <PopoverTrigger asChild>
                                     <Avatar className="cursor-pointer">
-                                        <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
+                                        {
+                                          isLoading ? <Skeleton className="w-10 h-10 rounded-full bg-gray-400" /> : <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
+                                        }
                                     </Avatar>
                                 </PopoverTrigger>
                                 <PopoverContent className="w-80">
                                     <div className=''>
                                         <div className='flex gap-2 space-y-2'>
+                                        {
+                                            profileShow ?   
                                             <Avatar className="cursor-pointer">
                                                 <AvatarImage src={user?.profile?.profilePhoto || "https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Transparent-Free-PNG-Clip-Art.png"} alt="@shadcn" />
                                             </Avatar>
+                                            : <Skeleton className="w-10 h-10 rounded-full bg-gray-400" />
+                                        }
                                             <div>
                                                 <h4 className='font-medium'>{user?.fullname}</h4>
                                                 <p className='text-sm text-muted-foreground'>{user?.profile?.bio}</p>

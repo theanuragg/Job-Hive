@@ -6,6 +6,7 @@ const initialState = {
   allAppliedJobs: [], // Stores the list of applied jobs
   singleJob: null, // Stores the details of a single job
   allAdminJobs: [], // Stores the list of admin jobs
+  isLoading: false, // Stores the loading state
 };
 
 const jobSlice = createSlice({
@@ -14,6 +15,9 @@ const jobSlice = createSlice({
   reducers: {
     setSearchedQuery: (state, action) => {
       state.searchedQuery = action.payload; // Set searched query for jobs
+    },
+    setJobLoading: (state, action) => {
+      state.isLoading = action.payload; // Set the loading state
     },
     setAllJobs: (state, action) => {
       state.allJobs = action.payload; // Set the jobs list
@@ -41,6 +45,7 @@ export const {
   setSingleJob,
   setAllAdminJobs,
   setSearchJobByText,
+  setJobLoading,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;
