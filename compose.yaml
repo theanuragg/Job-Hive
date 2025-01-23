@@ -1,0 +1,39 @@
+services:
+  client:
+    image: job-hive-client
+    container_name: client
+    ports:
+      - "5173:5173"
+    depends_on:
+      - server
+
+  server:
+    image: job-hive-server
+    container_name: server
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=12345
+      - MONGODB_URI=mongodb://db/jobhive
+      - PORT=8000
+      - CLOUDINARY_CLOUD_NAME=your-cloud-name
+      - CLOUDINARY_API_KEY=your-api-key
+      - CLOUDINARY_API_SECRET=your-api-secret
+      - EMAIL=your-email
+      - PASSWORD=your-password
+      - BASE_URL=http://localhost
+    depends_on:
+      - db
+
+  db:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+
+    volumes:
+      - mongodbdata:/data/db
+
+volumes:
+  mongodbdata:
+    driver: local
