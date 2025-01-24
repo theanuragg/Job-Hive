@@ -16,6 +16,11 @@ const jobSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    salaryUnit: {
+        type: String,
+        required: true,
+        enum: ['USD', 'INR', 'EUR', 'GBP']
+    },
     experienceLevel:{
         type:Number,
         required:true,
