@@ -4,10 +4,10 @@ import ErrorHandler from "../utils/error.js"
 
 // admin post krega job
 export const postJob = asyncError(async (req, res, next) => {
-    const { title, description, requirements, salary, location, jobType, experience, position, companyId } = req.body;
+    const { title, description, requirements, salary, salaryUnit, location, jobType, experience, position, companyId } = req.body;
     const userId = req.id;
 
-    if (!title || !description || !requirements || !salary || !location || !jobType || !experience || !position || !companyId) {
+    if (!title || !description || !requirements || !salary || !salaryUnit || !location || !jobType || !experience || !position || !companyId) {
         return next(new ErrorHandler("Something is missing.", 400));
     };
     const job = await Job.create({
@@ -15,6 +15,7 @@ export const postJob = asyncError(async (req, res, next) => {
         description,
         requirements,
         salary: Number(salary),
+        salaryUnit,
         location,
         jobType,
         experienceLevel: experience,
