@@ -2,15 +2,22 @@ import React, { useEffect, useState } from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { Avatar, AvatarImage } from '../ui/avatar'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
-import { Edit2, MoreHorizontal } from 'lucide-react'
-import { useSelector } from 'react-redux'
+import { Edit2, MoreHorizontal, Trash2 } from 'lucide-react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Skeleton } from '../ui/skeleton'
+import { deleteCompany } from '@/redux/companySlice'
+import { COMPANY_API_END_POINT } from '../utils/constants'
+import { toast } from 'sonner'
 
 const CompaniesTable = () => {
     const { companies, searchCompanyByText, isLoading } = useSelector(store => store.company);
     const [filterCompany, setFilterCompany] = useState(companies);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const user = useSelector(store => store.auth.user);
+
     useEffect(()=>{
         const filteredCompany = companies.length >= 0 && companies.filter((company)=>{
             if(!searchCompanyByText){
@@ -21,6 +28,32 @@ const CompaniesTable = () => {
         });
         setFilterCompany(filteredCompany);
     },[companies,searchCompanyByText])
+
+    const handleDelete = async (companyId) => {
+        try {
+            const response = await fetch(`${COMPANY_API_END_POINT}/delete/${companyId}`, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: user._id
+                })
+            });
+            const data = await response.json();
+            
+            if (data.success) {
+                dispatch(deleteCompany(companyId));
+                toast.success("Company deleted successfully");
+            } else {
+                toast.error(data.message || "Failed to delete company");
+            }
+        } catch (error) {
+            toast.error("Failed to delete company");
+        }
+    };
+
     return (
         <div>
             <Table>
@@ -51,9 +84,13 @@ const CompaniesTable = () => {
                                     <Popover>
                                         <PopoverTrigger><MoreHorizontal /></PopoverTrigger>
                                         <PopoverContent className="w-32">
-                                            <div onClick={()=> navigate(`/admin/companies/${company._id}`)} className='flex items-center gap-2 w-fit cursor-pointer'>
+                                            <div onClick={()=> navigate(`/admin/companies/${company._id}`)} className='flex items-center gap-2 w-fit cursor-pointer mb-2'>
                                                 <Edit2 className='w-4' />
                                                 <span>Edit</span>
+                                            </div>
+                                            <div onClick={() => handleDelete(company._id)} className='flex items-center gap-2 w-fit cursor-pointer text-red-600'>
+                                                <Trash2 className='w-4' />
+                                                <span>Delete</span>
                                             </div>
                                         </PopoverContent>
                                     </Popover>

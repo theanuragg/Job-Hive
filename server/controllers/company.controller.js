@@ -70,3 +70,23 @@ export const updateCompany = asyncError(async (req, res) => {
         success:true
     })
 });
+export const deleteCompany = asyncError(async (req, res, next) => {
+    const companyId = req.params.id;
+    const userId = req.body.userId;
+    const company = await Company.findById(companyId);
+
+    if(JSON.stringify(company.userId) !== JSON.stringify(userId)){
+        return next(new ErrorHandler("You are not authorized to delete this company.", 403));
+    }
+
+    if (!company) {
+        return next(new ErrorHandler("Company not found.", 404));
+    }
+
+    await Company.findByIdAndDelete(companyId);
+
+    return res.status(200).json({
+        message: "Company deleted successfully.",
+        success: true
+    });
+});
