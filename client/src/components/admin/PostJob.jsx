@@ -17,6 +17,7 @@ const PostJob = () => {
         title: "",
         description: "",
         salary: "",
+        salaryUnit: "",
         location: "",
         jobType: "", // This is used for job type selection
         experience: "",
@@ -88,6 +89,9 @@ const PostJob = () => {
         setInput((prev) => ({ ...prev, requirements: values }));
     };
 
+    const selectSalaryUnitHandler = (value) => {
+        setInput({ ...input, salaryUnit: value });
+    };
 
     return (
         <div>
@@ -124,6 +128,22 @@ const PostJob = () => {
                                 onChange={changeEventHandler}
                                 className="focus:ring focus:ring-indigo-300 my-1"
                             />
+                        </div>
+                        <div>
+                            <Label>Salary Unit</Label>
+                            <Select onValueChange={selectSalaryUnitHandler}>
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Select Currency" />
+                                </SelectTrigger>
+                                <SelectContent className="bg-white">
+                                    <SelectGroup>
+                                        <SelectItem value="USD">USD</SelectItem>
+                                        <SelectItem value="INR">INR</SelectItem>
+                                        <SelectItem value="EUR">EUR</SelectItem>
+                                        <SelectItem value="GBP">GBP</SelectItem>
+                                    </SelectGroup>
+                                </SelectContent>
+                            </Select>
                         </div>
                         <div>
                             <Label>Location</Label>
