@@ -120,6 +120,15 @@ As this project is part of SWOC, please follow the [Guidelines](https://docs.goo
 <!--Line-->
 <img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="900">
 
+
+## Contributors
+A huge shoutout to our wonderful contributors 
+
+<a href="https://github.com/vedanshjainvj/Job-Hive/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=vedanshjainvj/Job-Hive" />
+</a>
+
+
 ## 📄 Ending Note
 Thank you for your interest in **JobHive**! We value your contributions and are excited to have you as part of our community. Feel free to share your ideas, report bugs, and help us make **JobHive** even better.
 
