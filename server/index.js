@@ -56,7 +56,7 @@ app.use((req, res, next) => {
 
 
 import admin from 'firebase-admin';
-import serviceAccount from './utils/firebase-adminsdk.json' assert { type: "json" };
+import serviceAccount from './utils/firebase-adminsdk.json' with { type: "json" };
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
