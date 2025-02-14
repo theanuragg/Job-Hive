@@ -7,6 +7,9 @@ const initialState = {
   singleJob: null, // Stores the details of a single job
   allAdminJobs: [], // Stores the list of admin jobs
   isLoading: false, // Stores the loading state
+  location: '', // Stores the selected location filter
+  industry: '', // Stores the selected industry filter
+  salary: '', // Stores the selected salary filter
 };
 
 const jobSlice = createSlice({
@@ -34,6 +37,15 @@ const jobSlice = createSlice({
     setSearchJobByText: (state, action) => {
       state.searchedQuery = action.payload; // Set the filter text for searching jobs
     },
+    setLocation: (state, action) => {
+      state.location = action.payload; // Set the location filter
+    },
+    setIndustry: (state, action) => {
+      state.industry = action.payload; // Set the industry filter
+    },
+    setSalary: (state, action) => {
+      state.salary = action.payload; // Set the salary filter
+    },
   },
 });
 
@@ -46,6 +58,9 @@ export const {
   setAllAdminJobs,
   setSearchJobByText,
   setJobLoading,
+  setLocation,
+  setIndustry,
+  setSalary,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;

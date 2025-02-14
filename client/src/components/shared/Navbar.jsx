@@ -15,7 +15,7 @@ import { Skeleton } from '../ui/skeleton'
 // Navbar Component
 const Navbar = () => {
 
-    const [menuOpened, setMenuOpened] = useState(false);    
+    const [menuOpened, setMenuOpened] = useState(false);
     const [profileShow, setProfileShow] = useState(false);
     const toggleMenu = () => setMenuOpened(!menuOpened);
     const { user } = useSelector(store => store.auth);
@@ -38,11 +38,11 @@ const Navbar = () => {
     }
 
     const handlePopOverChange = (open) => {
-        if(open){
+        if (open) {
             setTimeout(() => {
                 setProfileShow(true);
-            },500);
-        }else{
+            }, 500);
+        } else {
             setProfileShow(false);
         }
     }
@@ -77,26 +77,26 @@ const Navbar = () => {
                     </ul>
                     {/* mobile */}
                     {menuOpened
-                    ? <MdClose color='#000' onClick={()=>toggleMenu(false)} className='visible md:invisible h-6 w-6 sm:h-8 sm:w-8'/>
-                    :  <MdMenu color='#000' onClick={()=>toggleMenu(true)} className='visible md:invisible h-6 w-6 sm:h-8 sm:w-8'/>
+                        ? <MdClose color='#000' onClick={() => toggleMenu(false)} className='visible md:invisible h-6 w-6 sm:h-8 sm:w-8' />
+                        : <MdMenu color='#000' onClick={() => toggleMenu(true)} className='visible md:invisible h-6 w-6 sm:h-8 sm:w-8' />
                     }
-                    {menuOpened &&(
-                            <ul className='flex flex-col items-start fixed top-16 right-8 p-12 bg-white font-medium shadow-md w-64 transition-all duration-300 rounded-3xl gap-5'>
-                        {
-                            user && user.role === 'recruiter' ? (
-                                <>
-                                    <li><Link to="/admin/companies">Companies</Link></li>
-                                    <li><Link to="/admin/jobs">Jobs</Link></li>
-                                </>
-                            ) : (
-                                <>
-                                    <li><Link to="/">Home</Link></li>
-                                    <li><Link to="/jobs">Jobs</Link></li>
-                                    <li><Link to="/browse">Browse</Link></li>
-                                </>
-                            )
-                        }
-                    </ul>
+                    {menuOpened && (
+                        <ul className='flex flex-col items-start fixed top-16 right-8 p-12 bg-white font-medium shadow-md w-64 transition-all duration-300 rounded-3xl gap-5'>
+                            {
+                                user && user.role === 'recruiter' ? (
+                                    <>
+                                        <li><Link to="/admin/companies">Companies</Link></li>
+                                        <li><Link to="/admin/jobs">Jobs</Link></li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <li><Link to="/">Home</Link></li>
+                                        <li><Link to="/jobs">Jobs</Link></li>
+                                        <li><Link to="/browse">Browse</Link></li>
+                                    </>
+                                )
+                            }
+                        </ul>
                     )}
 
                     {
@@ -114,38 +114,41 @@ const Navbar = () => {
                                         }
                                     </Avatar>
                                 </PopoverTrigger>
-                                <PopoverContent className="w-80">
-                                    <div className=''>
-                                        <div className='flex gap-2 space-y-2'>
-                                        {
-                                            profileShow ?   
-                                            <Avatar className="cursor-pointer">
-                                                <AvatarImage src={user?.profile?.profilePhoto || "https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Transparent-Free-PNG-Clip-Art.png"} alt="@shadcn" />
+                                <PopoverContent className="w-80 p-4 mr-5 shadow-lg rounded-xl bg-white">
+                                    <div className="flex items-center gap-4">
+                                        {profileShow ? (
+                                            <Avatar className="w-12 h-12">
+                                                <AvatarImage
+                                                    src={user?.profile?.profilePhoto || "https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Transparent-Free-PNG-Clip-Art.png"}
+                                                    alt="Profile Photo"
+                                                />
                                             </Avatar>
-                                            : <Skeleton className="w-10 h-10 rounded-full bg-gray-400" />
-                                        }
-                                            <div>
-                                                <h4 className='font-medium'>{user?.fullname}</h4>
-                                                <p className='text-sm text-muted-foreground'>{user?.profile?.bio}</p>
-                                            </div>
-                                        </div>
-                                        <div className='flex flex-col my-2 text-gray-600'>
-                                            {
-                                                user && user.role === 'student' && (
-                                                    <div className='flex w-fit items-center gap-2 cursor-pointer'>
-                                                        <User2 />
-                                                        <Button variant="link"> <Link to="/profile">View Profile</Link></Button>
-                                                    </div>
-                                                )
-                                            }
-
-                                            <div className='flex w-fit items-center gap-2 cursor-pointer'>
-                                                <LogOut />
-                                                <Button onClick={logoutHandler} variant="link">Logout</Button>
-                                            </div>
+                                        ) : (
+                                            <Skeleton className="w-12 h-12 rounded-full bg-gray-300" />
+                                        )}
+                                        <div className="flex flex-col">
+                                            <h4 className="font-semibold text-lg">{user?.fullname}</h4>
+                                            <p className="text-sm text-gray-500">{user?.profile?.bio}</p>
                                         </div>
                                     </div>
+
+                                    {/* Divider */}
+                                    <hr className="border-gray-300 my-3" />
+
+                                    <div className="flex flex-col gap-3 text-gray-700">
+                                        {user && user.role === "student" && (
+                                            <Link to="/profile" className="flex items-center gap-2 hover:text-black transition">
+                                                <User2 className="w-5 h-5" />
+                                                <span>View Profile</span>
+                                            </Link>
+                                        )}
+                                        <button onClick={logoutHandler} className="flex items-center gap-2">
+                                            <LogOut className="w-5 h-5" />
+                                            <span>Logout</span>
+                                        </button>
+                                    </div>  
                                 </PopoverContent>
+
                             </Popover>
                         )
                     }

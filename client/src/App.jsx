@@ -1,6 +1,5 @@
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Navbar from './components/shared/Navbar'
 
 // import AdminDashboard from './components/Admins/AdminDashboard' this is creating an error
 
@@ -8,7 +7,7 @@ import { messaging } from './components/utils/firebase'
 import { getToken } from 'firebase/messaging'
 import { useEffect } from 'react'
 import { setToken } from './redux/firebaseTokenSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { lazy, Suspense } from 'react'
 const Login = lazy(() => import('./components/auth/Login'))
 const Signup = lazy(() => import('./components/auth/Signup'))
@@ -25,7 +24,6 @@ const PostJob = lazy(() => import('./components/admin/PostJob'))
 const Applicants = lazy(() => import('./components/admin/Applicants'))
 const ProtectedRoute = lazy(() => import('./components/admin/ProtectedRoute'))
 const Roadmaps = lazy(() => import('./components/Roadmaps'))
-const RoadmapView = lazy(() => import('./components/RoadmapView'))
 
 const appRouter = createBrowserRouter([
   {
@@ -62,8 +60,6 @@ const appRouter = createBrowserRouter([
     element: <Roadmaps />
   },
   {
-
-
     // path:"/admin",
     // element: <AdminDashboard/>
   },

@@ -6,7 +6,6 @@ import cloudinary from "../utils/cloudinary.js";
 import ErrorHandler from "../utils/error.js";
 import { asyncError } from "../middlewares/error.js"
 import admin from 'firebase-admin';
-import serviceAccount from '../utils/firebase-adminsdk.json' assert { type: "json" };
 
 export const google = asyncError(async (req, res) => {
   const { name, email, googlePhotoURL } = req.body;
