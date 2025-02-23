@@ -52,9 +52,9 @@ export const getAllJobs = asyncError(async (req, res, next) => {
 // student
 export const getJobById = asyncError(async (req, res, next) => {
     const jobId = req.params.id;
-    const job = await Job.findById(jobId).populate({
-        path:"applications"
-    });
+    const job = await Job.findById(jobId)
+        .populate('applications')
+        .populate('company');
     if (!job) {
         return next(new ErrorHandler("Job not found.", 404));
     };
