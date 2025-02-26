@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/  
+Disallow: /profile
+Disallow: /login
+Disallow: /signup
+
+Sitemap: https://jobhive-vedansh.netlify.app/sitemap.xml
