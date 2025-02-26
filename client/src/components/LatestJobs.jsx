@@ -12,7 +12,7 @@ const LatestJobs = () => {
       <h1 className="text-xl sm:text-4xl font-bold">
         <span className="text-[#6A38C2]">Latest & Top </span> Job Openings
       </h1>
-      <div className="grid grid-cols-3 gap-4 my-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-5">
         {allJobs?.slice(0, 6).map((job) => (
           <div
             key={job._id}

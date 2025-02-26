@@ -84,8 +84,8 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className=" border-gray-300 pt-6 mt-6 text-center">
-          <p className="text-gray-600 text-sm">© 2024 Job Hive. All rights reserved.</p>
+        <div className="border-gray-300 pt-6 mt-6 text-center">
+          <p className="text-gray-600 text-sm">© {currentYear} Job Hive. All rights reserved.</p>
         </div>
       </div>
     </footer>

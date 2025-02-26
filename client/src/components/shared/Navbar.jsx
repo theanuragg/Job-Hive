@@ -48,7 +48,7 @@ const Navbar = () => {
     }
     return (
     <div className="bg-white ">
-      <div className="flex items-center justify-between fixed left-0 right-0 z-20 py-2 top-0 mx-auto  h-16 gap-4 bg-opacity-15 dark:border-gray-600 backdrop-blur-lg dark:opacity-70">
+      <div className="flex items-center justify-between fixed left-0 right-2 z-20 py-2 top-0 mx-auto  h-16 gap-4 bg-opacity-15 dark:border-gray-600 backdrop-blur-lg dark:opacity-70">
         <div className='mx-20'>
                     <h1 className='text-2xl font-bold'>Job<span className='text-[#F83002]'>Hive</span></h1>
                 </div>
@@ -81,7 +81,7 @@ const Navbar = () => {
                         : <MdMenu color='#000' onClick={() => toggleMenu(true)} className='visible md:invisible h-6 w-6 sm:h-8 sm:w-8' />
                     }
                     {menuOpened && (
-                        <ul className='flex flex-col items-start fixed top-16 right-8 p-12 bg-white font-medium shadow-md w-64 transition-all duration-300 rounded-3xl gap-5'>
+                        <ul className='flex flex-col items-start fixed top-16 right-8 p-6 bg-white font-medium shadow-md w-64 transition-all duration-300 rounded-3xl gap-5'>
                             {
                                 user && user.role === 'recruiter' ? (
                                     <>
@@ -96,62 +96,65 @@ const Navbar = () => {
                                     </>
                                 )
                             }
+                            {
+                                !user ? (
+                                    <div className='flex flex-col gap-2'>
+                                        <Link to="/login">
+                                            <Button variant="outline" className="h-8 w-full">Login</Button>
+                                        </Link>
+                                        <Link to="/signup">
+                                            <Button className="bg-[#6A38C2] hover:bg-[#5b30a6] h-8 w-full">Signup</Button>
+                                        </Link>
+                                    </div>
+                                ) : (
+                                    <Popover onOpenChange={handlePopOverChange}>
+                                        <PopoverTrigger asChild>
+                                            <Avatar className="cursor-pointer">
+                                                {
+                                                  isLoading ? <Skeleton className="w-10 h-10 rounded-full bg-gray-400" /> : <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
+                                                }
+                                            </Avatar>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-80 p-4 mr-5 shadow-lg rounded-xl bg-white">
+                                            <div className="flex items-center gap-4">
+                                                {profileShow ? (
+                                                    <Avatar className="w-12 h-12">
+                                                        <AvatarImage
+                                                            src={user?.profile?.profilePhoto || "https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Transparent-Free-PNG-Clip-Art.png"}
+                                                            alt="Profile Photo"
+                                                        />
+                                                    </Avatar>
+                                                ) : (
+                                                    <Skeleton className="w-12 h-12 rounded-full bg-gray-300" />
+                                                )}
+                                                <div className="flex flex-col">
+                                                    <h4 className="font-semibold text-lg">{user?.fullname}</h4>
+                                                    <p className="text-sm text-gray-500">{user?.profile?.bio}</p>
+                                                </div>
+                                            </div>
+
+                                            {/* Divider */}
+                                            <hr className="border-gray-300 my-3" />
+
+                                            <div className="flex flex-col gap-3 text-gray-700">
+                                                {user && user.role === "student" && (
+                                                    <Link to="/profile" className="flex items-center gap-2 hover:text-black transition">
+                                                        <User2 className="w-5 h-5" />
+                                                        <span>View Profile</span>
+                                                    </Link>
+                                                )}
+                                                <button onClick={logoutHandler} className="flex items-center gap-2">
+                                                    <LogOut className="w-5 h-5" />
+                                                    <span>Logout</span>
+                                                </button>
+                                            </div>  
+                                        </PopoverContent>
+
+                                    </Popover>
+                                )
+                            }
                         </ul>
                     )}
-
-                    {
-                        !user ? (
-                            <div className='flex items-center gap-2 mx-20'>
-                                <Link to="/login"><Button variant="outline" className="h-8 w-16 sm:h-10 sm:w-20">Login</Button></Link>
-                                <Link to="/signup"><Button className="bg-[#6A38C2] hover:bg-[#5b30a6] h-8 w-16 sm:h-10 sm:w-20">Signup</Button></Link>
-                            </div>
-                        ) : (
-                            <Popover onOpenChange={handlePopOverChange}>
-                                <PopoverTrigger asChild>
-                                    <Avatar className="cursor-pointer">
-                                        {
-                                          isLoading ? <Skeleton className="w-10 h-10 rounded-full bg-gray-400" /> : <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
-                                        }
-                                    </Avatar>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-80 p-4 mr-5 shadow-lg rounded-xl bg-white">
-                                    <div className="flex items-center gap-4">
-                                        {profileShow ? (
-                                            <Avatar className="w-12 h-12">
-                                                <AvatarImage
-                                                    src={user?.profile?.profilePhoto || "https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-Transparent-Free-PNG-Clip-Art.png"}
-                                                    alt="Profile Photo"
-                                                />
-                                            </Avatar>
-                                        ) : (
-                                            <Skeleton className="w-12 h-12 rounded-full bg-gray-300" />
-                                        )}
-                                        <div className="flex flex-col">
-                                            <h4 className="font-semibold text-lg">{user?.fullname}</h4>
-                                            <p className="text-sm text-gray-500">{user?.profile?.bio}</p>
-                                        </div>
-                                    </div>
-
-                                    {/* Divider */}
-                                    <hr className="border-gray-300 my-3" />
-
-                                    <div className="flex flex-col gap-3 text-gray-700">
-                                        {user && user.role === "student" && (
-                                            <Link to="/profile" className="flex items-center gap-2 hover:text-black transition">
-                                                <User2 className="w-5 h-5" />
-                                                <span>View Profile</span>
-                                            </Link>
-                                        )}
-                                        <button onClick={logoutHandler} className="flex items-center gap-2">
-                                            <LogOut className="w-5 h-5" />
-                                            <span>Logout</span>
-                                        </button>
-                                    </div>  
-                                </PopoverContent>
-
-                            </Popover>
-                        )
-                    }
 
                 </div>
             </div>
